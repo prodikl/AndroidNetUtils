@@ -1,4 +1,4 @@
-package prodikl.com.teachers.util.async;
+package com.prodikl.androidNetUtils.async;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import prodikl.com.teachers.util.JsonCallback;
+import com.prodikl.androidNetUtils.JsonCallback;
 
 /**
  * Created by Keith on 12/23/2014.

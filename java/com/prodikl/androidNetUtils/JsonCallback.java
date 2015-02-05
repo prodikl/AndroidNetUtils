@@ -1,4 +1,4 @@
-package prodikl.com.teachers.util;
+package com.prodikl.androidNetUtils;
 
 import org.json.JSONObject;
 

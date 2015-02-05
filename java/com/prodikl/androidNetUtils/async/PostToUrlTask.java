@@ -1,4 +1,4 @@
-package prodikl.com.teachers.util.async;
+package com.prodikl.androidNetUtils.async;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -20,7 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import prodikl.com.teachers.util.JsonCallback;
+import com.prodikl.androidNetUtils.JsonCallback;
 
 /**
  * Created by Keith on 12/9/2014.
