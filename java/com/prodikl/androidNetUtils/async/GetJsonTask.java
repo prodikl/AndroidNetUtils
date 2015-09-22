@@ -2,16 +2,14 @@ package com.prodikl.androidNetUtils.async;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import com.prodikl.androidNetUtils.JsonCallback;
 
@@ -32,21 +30,17 @@ public class GetJsonTask extends AsyncTask<String, Void, Void> {
         return null;
     }
 
-    private static String getJsonString(String url){
-        int BUFFER_SIZE = 2000;
-        InputStream content = null;
+    private static String getJsonString(String stringUrl){
         try {
-            content  = OpenHttpGETConnection(url);
-        } catch (Exception e){
-            Log.d("DownloadImages", e.getLocalizedMessage());
-            return "";
-        }
+            URL url = new URL(stringUrl);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            InputStream content = new BufferedInputStream(httpURLConnection.getInputStream());
+            int BUFFER_SIZE = 2000;
 
-        InputStreamReader isr = new InputStreamReader(content);
-        int charRead;
-        String str = "";
-        char[] inputBuffer = new char[BUFFER_SIZE];
-        try {
+            InputStreamReader isr = new InputStreamReader(content);
+            int charRead;
+            String str = "";
+            char[] inputBuffer = new char[BUFFER_SIZE];
             while ((charRead = isr.read(inputBuffer)) > 0){
                 // convert chars to string
                 String readString = String.copyValueOf(inputBuffer, 0, charRead);
@@ -54,32 +48,10 @@ public class GetJsonTask extends AsyncTask<String, Void, Void> {
                 inputBuffer = new char[BUFFER_SIZE];
             }
             content.close();
-        } catch (IOException e){
-            Log.d("DownloadImages", e.getLocalizedMessage());
-            return "";
-        }
-        return str;
-    }
-    private static InputStream OpenHttpGETConnection(String url){
-        InputStream inputStream = null;
-        HttpClient httpClient = null;
-        HttpResponse httpResponse = null;
-
-
-        try {
-            httpClient = new DefaultHttpClient();
-        } catch (Exception e){ Log.d("HttpClient", e.getMessage());}
-
-        try {
-            httpResponse = httpClient.execute(new HttpGet(url));
-        } catch (Exception e){Log.d("HttpResponse", e.getMessage());}
-
-        try {
-            inputStream = httpResponse.getEntity().getContent();
+            return str;
         } catch (Exception e){
-            Log.d("InputStream", e.getLocalizedMessage());
+            e.printStackTrace();
         }
-
-        return inputStream;
+        return null;
     }
 }
